@@ -99,6 +99,13 @@
       '<div class="meta"><div class="bar"><i style="width:' + pct + '%"></i></div>' + status + '</div></div></a>';
   }
 
+  function coursesByGroup() {
+    return GROUPS.map(function (g) {
+      var list = COURSES.filter(function (c) { return c.group === g.id; });
+      return '<div class="sec-title">' + esc(g.name) + '<span class="grp-sub">' + esc(g.desc) + '</span></div>' + list.map(courseCard).join('');
+    }).join('');
+  }
+
   function foot() {
     return '<p class="foot">このアプリは個人が作成した非公式の学習教材で、OpenAI および OpenAI Academy とは関係ありません。' +
       '外部サイトの内容・動画の権利は、それぞれの提供元にあります。掲載情報は ' + esc(GUIDE.updated) + ' 時点のものです。</p>';
@@ -114,12 +121,12 @@
       '<section class="hero"><div class="ring"></div>' +
       '<div class="kicker" style="color:rgba(255,255,255,.75)">無料・日本語・スマホで学べる</div>' +
       '<h1 class="h1">AIに「仕事を任せられる人」になる</h1>' +
-      '<p>指示の出し方から、エージェントへの任せ方まで。1レッスン10分前後で、ChatGPTで試しながら進めます。</p>' +
+      '<p>指示の出し方やエージェントへの任せ方から、チームでの導入・教育・開発まで。1レッスン10分前後で、ChatGPTで試しながら進めます。</p>' +
       '<div class="hero-stats"><div><b>' + doneCount + '</b><span>完了レッスン</span></div>' +
       '<div><b>' + COURSES.length + '</b><span>コース</span></div>' +
       '<div><b>' + GUIDE.cats.reduce(function (n, c) { return n + c.courses.length; }, 0) + '</b><span>公式コースの受講ガイド</span></div></div>' +
       '<a class="btn" href="#/lesson/' + nxt + '">' + (started ? '続きから学ぶ' : '最初のレッスンを始める') + ' →</a></section>' +
-      '<div class="sec-title">コース</div>' + COURSES.map(courseCard).join('') +
+      coursesByGroup() +
       '<div class="sec-title">公式の無料コースも受けたい人へ</div>' +
       '<a class="card course" href="#/guide"><div class="num">' + icon('guide') + '</div><div style="flex:1">' +
       '<h3>OpenAI Academy の受講ガイド</h3><p>英語の公式コースを、日本語で受講するための手順と、どのコースから始めるかの目安をまとめています。</p></div></a>' +
@@ -128,8 +135,8 @@
 
   function pageLearn() {
     renderChrome('learn');
-    view.innerHTML = '<h1 class="h1">講座</h1><p class="lead">上から順に進めるのがおすすめです。1レッスン10分前後で、途中でやめても進み具合は残ります。</p>' +
-      '<div style="margin-top:16px">' + COURSES.map(courseCard).join('') + '</div>' + foot();
+    view.innerHTML = '<h1 class="h1">講座</h1><p class="lead">まずは「仕事でAIを使う」の3コースから。そのあとは、立場に合わせて選んでください。1レッスン10分前後で、途中でやめても進み具合は残ります。</p>' +
+      coursesByGroup() + foot();
   }
 
   function pageCourse(id) {
@@ -184,7 +191,7 @@
     var readyIds = c.lessons.map(function (l) { return l.id; }).filter(function (x) { return LESSONS[x]; });
     var pos = readyIds.indexOf(id);
     var prev = readyIds[pos - 1], next = readyIds[pos + 1];
-    var nextCourse = COURSES[COURSES.indexOf(c) + 1];
+    var nextCourse = COURSES.filter(function (x, i) { return i > COURSES.indexOf(c) && x.group === c.group; })[0];
     var nextCourseFirst = nextCourse && nextCourse.lessons.filter(function (l) { return LESSONS[l.id]; })[0];
     view.innerHTML =
       '<div class="kicker">コース' + c.no + '　' + esc(c.title) + '</div>' +

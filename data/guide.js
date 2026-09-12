@@ -38,21 +38,21 @@
         name: 'AIで作る', en: 'Build with AI',
         desc: '開発者向け。Codex（コーデックス）と OpenAI の API（エーピーアイ）を使って、AIの仕組みを設計・構築・評価・公開します。下の説明はコース名と公式の分類から要点をまとめたもので、詳しい中身は公式ページで確認してください。',
         courses: [
-          { ja: 'AIで解く課題を決める', en: 'Scope AI Solutions', url: base + 'scope-ai-solutions-kjplw', desc: 'AIで何を解決するのか、どこまでを対象にするのかを決める段階を扱います。' },
-          { ja: 'AIアプリを評価する', en: 'Evaluate AI Applications', url: base + 'evaluate-ai-applications-pxds7', desc: 'AIを組み込んだアプリの出来をどう測り、改善につなげるかを扱います。' },
-          { ja: 'エージェント型の仕組みを設計して作る', en: 'Design and Build Agentic Systems', url: base + 'design-and-build-agentic-systems-k5uke', desc: '自分で判断して動くエージェント型の仕組みを、設計から構築まで扱います。' },
-          { ja: '検索と組み合わせたAIを作る', en: 'Build with Retrieval-Augmented Generation', url: base + 'build-with-retrieval-augmented-generation-2v6xg', desc: '手元の文書などを検索し、その内容をもとに答えるAI（RAG＝ラグ）の作り方を扱います。' },
-          { ja: 'AIアプリの性能を上げる', en: 'Optimize AI Application Performance', url: base + 'optimize-ai-application-performance-1k50h', desc: 'AIアプリの性能を改善する方法を扱います。' },
-          { ja: 'Codex を始める', en: 'Get Started with Codex', url: base + 'get-started-with-codex-jkhsq', desc: 'OpenAI のコーディング用AIエージェント Codex を使い始めるための入門です。' },
-          { ja: 'Codex の使い方を広げる', en: 'Extend Codex Workflows', url: base + 'extend-codex-workflows-4e61p', desc: 'Codex を日々の開発の流れに組み込み、使い方を広げていきます。' },
-          { ja: 'Codex をチームと仕組みに広げる', en: 'Scale Codex Across Teams and Systems', url: base + 'scale-codex-across-teams-and-systems-jr83a', desc: 'Codex を個人の道具から、チームや組織の仕組みへ広げていきます。' }
+          { ja: 'AIで解く課題を決める', en: 'Scope AI Solutions', url: base + 'scope-ai-solutions-kjplw', lesson: 'c8', desc: 'AIで何を解決するのか、どこまでを対象にするのかを決める段階を扱います。' },
+          { ja: 'AIアプリを評価する', en: 'Evaluate AI Applications', url: base + 'evaluate-ai-applications-pxds7', lesson: 'c8', desc: 'AIを組み込んだアプリの出来をどう測り、改善につなげるかを扱います。' },
+          { ja: 'エージェント型の仕組みを設計して作る', en: 'Design and Build Agentic Systems', url: base + 'design-and-build-agentic-systems-k5uke', lesson: 'c8', desc: '自分で判断して動くエージェント型の仕組みを、設計から構築まで扱います。' },
+          { ja: '検索と組み合わせたAIを作る', en: 'Build with Retrieval-Augmented Generation', url: base + 'build-with-retrieval-augmented-generation-2v6xg', lesson: 'c8', desc: '手元の文書などを検索し、その内容をもとに答えるAI（RAG＝ラグ）の作り方を扱います。' },
+          { ja: 'AIアプリの性能を上げる', en: 'Optimize AI Application Performance', url: base + 'optimize-ai-application-performance-1k50h', lesson: 'c8', desc: 'AIアプリの性能を改善する方法を扱います。' },
+          { ja: 'Codex を始める', en: 'Get Started with Codex', url: base + 'get-started-with-codex-jkhsq', lesson: 'c7', desc: 'OpenAI のコーディング用AIエージェント Codex を使い始めるための入門です。' },
+          { ja: 'Codex の使い方を広げる', en: 'Extend Codex Workflows', url: base + 'extend-codex-workflows-4e61p', lesson: 'c7', desc: 'Codex を日々の開発の流れに組み込み、使い方を広げていきます。' },
+          { ja: 'Codex をチームと仕組みに広げる', en: 'Scale Codex Across Teams and Systems', url: base + 'scale-codex-across-teams-and-systems-jr83a', lesson: 'c7', desc: 'Codex を個人の道具から、チームや組織の仕組みへ広げていきます。' }
         ]
       },
       {
         name: 'AI活用を率いる', en: 'Lead AI Adoption',
         desc: 'リーダー向け。AI施策を1つ題材にして、組織で進めるための計画を作ります。',
         courses: [
-          { ja: 'AIリーダーシップ', en: 'AI Leadership', url: base + 'ai-leadership-kaf7k',
+          { ja: 'AIリーダーシップ', en: 'AI Leadership', url: base + 'ai-leadership-kaf7k', lesson: 'c4',
             desc: 'AI施策を1つ選び、事業の優先順位とのつなげ方、責任分担とルールづくり、ロードマップ、社内への定着までを考えて、AI戦略の下書きを作ります。' }
         ]
       },
@@ -60,8 +60,8 @@
         name: '教える・学ぶ', en: 'Teach and Learn with AI',
         desc: '教育向け。勉強・授業・これからへの備えに、AIをどう使うかを学びます。',
         courses: [
-          { ja: '教員のためのAI', en: 'AI for Educators', url: base + 'ai-for-educators-lc8j1', desc: '授業づくりや生徒への指導に、AIをどう役立てるかを扱う教員向けのコースです。' },
-          { ja: '大学生のためのAI', en: 'AI for College Students', url: base + 'ai-for-college-students-gxgmr', desc: '勉強を進める、早く身につける、将来に備える、といった場面でのAIの使い方を扱う大学生向けのコースです。' }
+          { ja: '教員のためのAI', en: 'AI for Educators', url: base + 'ai-for-educators-lc8j1', lesson: 'c5', desc: '授業づくりや生徒への指導に、AIをどう役立てるかを扱う教員向けのコースです。' },
+          { ja: '大学生のためのAI', en: 'AI for College Students', url: base + 'ai-for-college-students-gxgmr', lesson: 'c6', desc: '勉強を進める、早く身につける、将来に備える、といった場面でのAIの使い方を扱う大学生向けのコースです。' }
         ]
       }
     ]
