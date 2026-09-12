@@ -186,3 +186,6 @@ rt{font-size:.55em;color:var(--ink-sub);font-weight:600}
 .compare .plain b{color:var(--ink-mid)}
 .top .brand{min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .top .brand small{overflow:hidden;text-overflow:ellipsis}
+.offcard details{margin-top:12px;font-size:13.5px}
+.offcard summary{cursor:pointer;font-weight:800;color:var(--accent-ink)}
+.body .offcard ol{margin:8px 0 0 1.2em}

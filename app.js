@@ -166,6 +166,29 @@
       '<p class="muted">字幕が英語のときは、プレーヤーの「CC」から「日本語 (自動生成)」を選んでください。表示されない場合は <a href="https://vimeo.com/' + encodeURIComponent(v.id) + '" target="_blank" rel="noopener">Vimeoで開く</a></p>';
   }
 
+  function officialFor(id, c) {
+    return OFFICIAL.lessons[id] || OFFICIAL.courses[c.id];
+  }
+
+  function officialBlock(id, c) {
+    var o = officialFor(id, c);
+    if (!o) return '';
+    var isLesson = o.type === 'lesson';
+    return '<h2>公式の動画で学ぶ</h2><div class="card offcard">' +
+      '<div class="kicker">OpenAI Academy（英語・要サインイン）</div>' +
+      '<p style="margin:6px 0 12px">' + (isLesson
+        ? '公式コース「' + esc(o.name) + '」の、動画があるレッスンを開きます。'
+        : 'このテーマに対応する公式コース「' + esc(o.name) + '」を開きます。') + '</p>' +
+      '<a class="btn wide" href="' + esc(o.url) + '" target="_blank" rel="noopener">' +
+      (isLesson ? '公式レッスンの動画を見る（要サインイン）' : '公式コースを開く（要サインイン）') + ' ↗</a>' +
+      '<details><summary>日本語字幕の出し方</summary><ol>' +
+      '<li>初めて開くときは、コースページで「Enroll now（登録する）」を押し、ChatGPT のアカウントでサインインします。</li>' +
+      '<li>動画プレーヤーの「CC」（字幕）ボタンを押します。</li>' +
+      '<li>「日本語 (自動生成)」があれば選びます。自動生成なので、専門用語は訳がずれることがあります。</li>' +
+      '<li>日本語が選べない動画もあります。そのときは英語字幕をオンにして、このアプリの解説と<a href="#/glossary">用語集</a>を手がかりに見てください。</li>' +
+      '</ol></details></div>';
+  }
+
   function quizBlock(id, quiz) {
     var saved = state.quiz[id] || {};
     return '<h2>確認クイズ</h2><div class="quiz">' + quiz.map(function (q, qi) {
@@ -200,9 +223,9 @@
       '<article class="body">' + L.body +
       '<h2>ChatGPTで試してみる</h2><p>' + L.prompt.lead + '</p>' +
       '<div class="prompt"><div class="prompt-head"><span>' + esc(L.prompt.label) + '</span><button class="copy" data-copy="1">コピー</button></div><pre>' + esc(L.prompt.text) + '</pre></div>' +
-      videoBlock(L.video) + quizBlock(id, L.quiz) +
+      videoBlock(L.video) + officialBlock(id, c) + quizBlock(id, L.quiz) +
       '<h2>次の一歩</h2><div class="card"><p style="margin:0">' + L.next.text + '</p>' +
-      (L.next.href ? '<p style="margin:10px 0 0"><a class="btn sub" href="' + esc(L.next.href) + '" target="_blank" rel="noopener">' + esc(L.next.label) + ' ↗</a></p>' : '') + '</div>' +
+      (L.next.href && L.next.href !== (officialFor(id, c) || {}).url ? '<p style="margin:10px 0 0"><a class="btn sub" href="' + esc(L.next.href) + '" target="_blank" rel="noopener">' + esc(L.next.label) + ' ↗</a></p>' : '') + '</div>' +
       '</article>' +
       '<div style="margin-top:18px">' + (state.done[id]
         ? '<button class="btn sub wide" data-undone="1">✓ 完了済み（未完了に戻す）</button>'
