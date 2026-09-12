@@ -184,3 +184,5 @@ rt{font-size:.55em;color:var(--ink-sub);font-weight:600}
 .sec-title .grp-sub{margin-left:8px;font-weight:600;letter-spacing:0;color:var(--ink-sub)}
 .compare .plain{background:var(--brand-soft)}
 .compare .plain b{color:var(--ink-mid)}
+.top .brand{min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.top .brand small{overflow:hidden;text-overflow:ellipsis}

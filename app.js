@@ -77,10 +77,10 @@
     var doneCount = ids.filter(function (id) { return state.done[id]; }).length;
     if (back) {
       topbar.innerHTML = '<button class="back" aria-label="戻る" data-back="' + esc(back.href) + '">‹</button>' +
-        '<div class="brand">' + esc(back.title) + '<small>AIしごと教室</small></div>';
+        '<div class="brand">' + esc(back.title) + '<small>無料AIスクール 日本語ガイド</small></div>';
     } else {
       topbar.innerHTML = '<div class="logo">' + LOGO + '</div>' +
-        '<div class="brand">AIしごと教室<small>試作版・非公式</small></div>' +
+        '<div class="brand">無料AIスクール 日本語ガイド<small>試作版・非公式</small></div>' +
         '<span class="chip">完了 ' + doneCount + ' / ' + ids.length + '</span>';
     }
     tabsEl.innerHTML = TABS.map(function (t) {
@@ -317,7 +317,7 @@
     else if (name === 'glossary') pageGlossary();
     else pageHome();
     var h1 = view.querySelector('.h1');
-    document.title = (h1 && name ? h1.textContent + '｜' : '') + 'AIしごと教室';
+    document.title = (h1 && name ? h1.textContent + '｜' : '') + '無料AIスクール 日本語ガイド';
   }
 
   topbar.addEventListener('click', function (e) {

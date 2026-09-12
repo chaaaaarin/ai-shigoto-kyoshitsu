@@ -1,7 +1,7 @@
 {
-  "name": "AIしごと教室",
-  "short_name": "AIしごと教室",
-  "description": "AIに仕事を任せられるようになるための、日本語の無料学習アプリ（試作版）",
+  "name": "無料AIスクール 日本語ガイド",
+  "short_name": "AIスクール",
+  "description": "無料で学べる英語のAI講座を、日本語で理解して受講するためのガイドと講座（試作版・非公式）。",
   "lang": "ja",
   "start_url": "./",
   "scope": "./",
@@ -9,6 +9,11 @@
   "background_color": "#F3F6FA",
   "theme_color": "#1C3461",
   "icons": [
-    { "src": "icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }
+    {
+      "src": "icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
   ]
 }
