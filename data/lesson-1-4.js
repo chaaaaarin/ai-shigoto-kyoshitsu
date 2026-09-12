@@ -47,7 +47,7 @@ LESSONS['1-4'] = {
       a: 1, ex: 'AIのチェックも間違えることがあります。送る責任を持つのは自分なので、最後は自分で確かめます。' }
   ],
   next: {
-    text: 'コース1はここまでです。仕上げに、公式の無料コース「AI Foundations」で修了バッジを目指すのもおすすめです。コース2「仕事を手順にしてAIに乗せる」は準備中です。',
+    text: 'コース1はここまでです。仕上げに、公式の無料コース「AI Foundations」で修了バッジを目指すのもおすすめです。コース2「仕事を手順にしてAIに乗せる」では、毎週くり返す作業をAIに乗せる方法を学びます。',
     href: 'https://academy.openai.com/public/courses/ai-foundations-dnq5w',
     label: 'AI Foundations を開く（英語）'
   }

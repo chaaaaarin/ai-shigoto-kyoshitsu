@@ -128,7 +128,7 @@
 
   function pageLearn() {
     renderChrome('learn');
-    view.innerHTML = '<h1 class="h1">講座</h1><p class="lead">上から順に進めるのがおすすめです。コース2・3は準備中です。</p>' +
+    view.innerHTML = '<h1 class="h1">講座</h1><p class="lead">上から順に進めるのがおすすめです。1レッスン10分前後で、途中でやめても進み具合は残ります。</p>' +
       '<div style="margin-top:16px">' + COURSES.map(courseCard).join('') + '</div>' + foot();
   }
 
@@ -184,6 +184,8 @@
     var readyIds = c.lessons.map(function (l) { return l.id; }).filter(function (x) { return LESSONS[x]; });
     var pos = readyIds.indexOf(id);
     var prev = readyIds[pos - 1], next = readyIds[pos + 1];
+    var nextCourse = COURSES[COURSES.indexOf(c) + 1];
+    var nextCourseFirst = nextCourse && nextCourse.lessons.filter(function (l) { return LESSONS[l.id]; })[0];
     view.innerHTML =
       '<div class="kicker">コース' + c.no + '　' + esc(c.title) + '</div>' +
       '<h1 class="h1">' + esc(L.title) + '</h1><p class="muted">所要 ' + L.min + ' 分</p>' +
@@ -200,7 +202,9 @@
         : '<button class="btn wide" data-done="1">このレッスンを完了にする</button>') + '</div>' +
       '<div class="pager">' +
       (prev ? '<a class="btn sub" href="#/lesson/' + prev + '">← 前へ</a>' : '<a class="btn sub" href="#/course/' + c.id + '">コース一覧</a>') +
-      (next ? '<a class="btn" href="#/lesson/' + next + '">次へ →</a>' : '<a class="btn" href="#/course/' + c.id + '">コースに戻る</a>') +
+      (next ? '<a class="btn" href="#/lesson/' + next + '">次へ →</a>'
+        : nextCourseFirst ? '<a class="btn" href="#/lesson/' + nextCourseFirst.id + '">次のコースへ →</a>'
+        : '<a class="btn" href="#/course/' + c.id + '">コースに戻る</a>') +
       '</div>' + foot();
 
     view.querySelector('[data-copy]').addEventListener('click', function () { copyText(L.prompt.text); });
