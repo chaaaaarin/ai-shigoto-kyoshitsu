@@ -179,16 +179,19 @@
     var o = officialFor(id, c);
     if (!o) return '';
     var items = o.items || [];
+    var player = o.type === 'player';
     var hasVideo = items.some(function (it) { return it.video; });
-    var heading = hasVideo ? '公式の動画で学ぶ' : (o.type === 'player' ? '公式レッスンで学ぶ' : '公式コースで学ぶ');
+    var heading = hasVideo ? '公式の動画で学ぶ' : (player ? '公式レッスンで学ぶ' : '公式コースで学ぶ');
     var label = hasVideo ? '公式の受講画面で動画を見る（要サインイン）'
-      : (o.type === 'player' ? '公式の受講画面を開く（要サインイン）' : '公式コースを開く（要サインイン）');
+      : (player ? '公式の受講画面を開く（要サインイン）' : '公式コースを開く（要サインイン）');
     var list = items.length
-      ? '<p style="margin:6px 0 4px">公式コース「' + esc(o.name) + '」の受講画面で、次のレッスンを選ぶと同じテーマを学べます。</p><ul class="offlist">' +
+      ? '<p style="margin:6px 0 4px">' + (player
+          ? '公式コース「' + esc(o.name) + '」の受講画面で、次のレッスンを選ぶと同じテーマを学べます。'
+          : '公式コース「' + esc(o.name) + '」の目次のうち、このテーマに近いのは次の項目です。') + '</p><ul class="offlist">' +
         items.map(function (it) {
           return '<li><b>' + esc(it.lesson) + '</b>' + (it.video ? ' <span class="badge ai">動画あり</span>' : '') +
             (it.ja ? '<span class="ja">' + esc(it.ja) + (it.topic ? '：' + esc(it.topic) : '') + '</span>' : '') +
-            '<span class="sub">' + esc(it.module) + '</span></li>';
+            (it.module ? '<span class="sub">' + esc(it.module) + '</span>' : '') + '</li>';
         }).join('') + '</ul>'
       : '<p style="margin:6px 0 12px">このテーマに対応する公式コース「' + esc(o.name) + '」を開きます。</p>';
     return '<h2>' + heading + '</h2><div class="card offcard">' +
@@ -196,7 +199,7 @@
       '<a class="btn wide" href="' + esc(o.url) + '" target="_blank" rel="noopener">' + label + ' ↗</a>' +
       '<details><summary>' + (hasVideo ? '日本語字幕の出し方' : '日本語で読むコツ') + '</summary><ol>' +
       '<li>初めて開くときは、コースページで「Enroll now（登録する）」を押し、ChatGPT のアカウントでサインインします。</li>' +
-      (items.length ? '<li>コースの画面が開いたら、レッスンの一覧から上のレッスン名を選びます。</li>' : '') +
+      (items.length ? '<li>' + (player ? 'コースの画面が開いたら、レッスンの一覧から上のレッスン名を選びます。' : 'コースの画面が開いたら、目次から上の項目を探します。') + '</li>' : '') +
       (hasVideo
         ? '<li>動画プレーヤーの「CC」（字幕）ボタンを押し、「日本語 (自動生成)」があれば選びます。自動生成なので、専門用語は訳がずれることがあります。</li>' +
           '<li>日本語が選べない動画もあります。そのときは英語字幕をオンにして、このアプリの解説と<a href="#/glossary">用語集</a>を手がかりに見てください。</li>'
@@ -336,14 +339,15 @@
   function tocBlock(key) {
     var t = key && OFFICIAL.toc && OFFICIAL.toc[key];
     if (!t) return '';
-    return '<details class="toc"><summary>受講画面の目次（日本語つき・' + esc(t.updated) + '時点）</summary>' +
+    var outline = t.type === 'outline';
+    return '<details class="toc"><summary>' + (outline ? '公開されている目次' : '受講画面の目次') + '（日本語つき・' + esc(t.updated) + '時点）</summary>' +
       t.modules.map(function (m) {
         return '<div class="mod"><h4>' + esc(m.name) + '<span class="ja">' + esc(m.ja) + (m.note ? '：' + esc(m.note) : '') + '</span></h4><ul>' +
           m.lessons.map(function (l) {
             return '<li>' + esc(l.t) + (l.video ? ' <span class="badge ai">動画あり</span>' : '') + '<span class="ja">' + esc(l.ja) + '</span></li>';
           }).join('') + '</ul></div>';
       }).join('') +
-      '<a class="btn wide" style="margin-top:12px" href="' + esc(t.url) + '" target="_blank" rel="noopener">公式の受講画面を開く（要サインイン） ↗</a></details>';
+      (outline ? '' : '<a class="btn wide" style="margin-top:12px" href="' + esc(t.url) + '" target="_blank" rel="noopener">公式の受講画面を開く（要サインイン） ↗</a>') + '</details>';
   }
 
   function pageGuide() {

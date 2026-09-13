@@ -7,13 +7,33 @@
     m1: 'Module 1: Introduction', m2: 'Module 2: Large Language Models', m3: 'Module 3: Prompting and Evaluation',
     m4: 'Module 4: Add Context', m5: 'Module 5: Responsible Use'
   };
+  // コース2・3は、公開のコース一覧に載っている目次（レッスン単位ではない）。ja は自前の訳（2026-09-13 時点）。
+  var AAF_URL = base + 'applied-ai-foundations-szsmv', AAW_URL = base + 'agents-and-workflows-y0qoc';
+  var AAF = {
+    o1: { lesson: '1. From Prompts to Workflows', ja: '1回の指示から、くり返す流れへ' },
+    o2: { lesson: '2. Reasoning Models', ja: '推論モデル' },
+    o3: { lesson: '3. Choose Capabilities', ja: '使う機能を選ぶ' },
+    o4: { lesson: '4. Design the Workflow', ja: '流れを設計する' },
+    o5: { lesson: '5. Responsible Use in Workflows', ja: '流れの中での責任ある使い方' }
+  };
+  var AAW = {
+    o1: { lesson: '1. From Asking to Assigning Work', ja: '質問から、仕事を任せる形へ' },
+    o2: { lesson: '2. Give the Agent a Clear Job', ja: 'エージェントに仕事をはっきり渡す' },
+    o3: { lesson: '3. Add Context and create your First Draft', ja: '材料を足して、最初の成果物を作る' },
+    o4: { lesson: '4. Improve and Share the Workflow', ja: '流れを改善して、共有する' },
+    o5: { lesson: '5. Getting more out of ChatGPT Work', ja: 'ChatGPT Work をもっと活用する' },
+    o6: { lesson: '6. Responsible Use', ja: '責任ある使い方' }
+  };
+  function outline(o) {
+    return Object.keys(o).map(function (k) { return { t: o[k].lesson, ja: o[k].ja }; });
+  }
   window.OFFICIAL = {
     courses: {
       c1: { name: 'AI Foundations', type: 'player', url: AIF_PLAYER, items: [
         { module: AIF.m1, lesson: '1.1 Welcome to AI Foundations', ja: 'ようこそ', topic: 'コースの目的と進め方', video: true }
       ] },
-      c2: { name: 'Applied AI Foundations', type: 'course', url: base + 'applied-ai-foundations-szsmv' },
-      c3: { name: 'Agents and Workflows', type: 'course', url: base + 'agents-and-workflows-y0qoc' },
+      c2: { name: 'Applied AI Foundations', type: 'course', url: AAF_URL },
+      c3: { name: 'Agents and Workflows', type: 'course', url: AAW_URL },
       c4: { name: 'AI Leadership', type: 'course', url: base + 'ai-leadership-kaf7k' },
       c5: { name: 'AI for Educators', type: 'course', url: base + 'ai-for-educators-lc8j1' },
       c6: { name: 'AI for College Students', type: 'course', url: base + 'ai-for-college-students-gxgmr' },
@@ -55,6 +75,14 @@
         { module: AIF.m5, lesson: '5.2 Share information carefully', ja: '情報を慎重に共有する', topic: '渡す情報を減らす', video: false },
         { module: AIF.m5, lesson: '5.3 Keep yourself in the loop', ja: '自分が判断に関わり続ける', topic: '影響に合わせた確認', video: false }
       ] },
+      '2-1': { name: 'Applied AI Foundations', type: 'course', url: AAF_URL, items: [AAF.o1] },
+      '2-2': { name: 'Applied AI Foundations', type: 'course', url: AAF_URL, items: [AAF.o4] },
+      '2-3': { name: 'Applied AI Foundations', type: 'course', url: AAF_URL, items: [AAF.o5] },
+      '2-4': { name: 'Applied AI Foundations', type: 'course', url: AAF_URL, items: [AAF.o1] },
+      '3-1': { name: 'Agents and Workflows', type: 'course', url: AAW_URL, items: [AAW.o1] },
+      '3-2': { name: 'Agents and Workflows', type: 'course', url: AAW_URL, items: [AAW.o2, AAW.o3] },
+      '3-3': { name: 'Agents and Workflows', type: 'course', url: AAW_URL, items: [AAW.o6] },
+      '3-4': { name: 'Agents and Workflows', type: 'course', url: AAW_URL, items: [AAW.o4] },
       '7-3': { name: 'Extend Codex Workflows', type: 'course', url: base + 'extend-codex-workflows-4e61p' },
       '7-4': { name: 'Scale Codex Across Teams and Systems', type: 'course', url: base + 'scale-codex-across-teams-and-systems-jr83a' },
       '8-2': { name: 'Build with Retrieval-Augmented Generation', type: 'course', url: base + 'build-with-retrieval-augmented-generation-2v6xg' },
@@ -103,6 +131,12 @@
         { name: 'Recap', ja: 'まとめ', note: '', lessons: [
           { t: 'Conclusion and feedback', ja: 'まとめとフィードバック' }
         ] }
+      ] },
+      aaf: { name: 'Applied AI Foundations', type: 'outline', url: AAF_URL, updated: '2026年9月13日', modules: [
+        { name: 'Course outline', ja: 'コースの流れ', note: '公式のコース一覧に載っている項目', lessons: outline(AAF) }
+      ] },
+      aaw: { name: 'Agents and Workflows', type: 'outline', url: AAW_URL, updated: '2026年9月13日', modules: [
+        { name: 'Course outline', ja: 'コースの流れ', note: '公式のコース一覧に載っている項目', lessons: outline(AAW) }
       ] }
     }
   };

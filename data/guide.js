@@ -12,7 +12,7 @@
       ],
       notes: [
         { t: 'サインインするアカウントは、先に決めておく', d: '進み具合と修了証は、サインインしたアカウントのメールアドレスに結びつきます。あとから別のアカウントとまとめることはできません。' },
-        { t: '修了証は「資格」ではありません', d: 'コースを終えた記録として発行されるもので、OpenAI の公式な認定資格ではありません。コースによっては、確認テストで一定の点数を取ることが修了の条件です（例: AI Foundations は80%以上）。' }
+        { t: '修了証は「資格」ではありません', d: 'コースを終えた記録として発行されるもので、OpenAI の公式な認定資格ではありません。このガイドで確かめたコース（仕事でAIを使う3コースと、AIで作るのうち5コース）は、確認テストで80%以上を取るとバッジの対象になります。' }
       ],
       tips: [
         { t: 'ページは、ブラウザの翻訳機能で日本語にする', d: 'Chrome なら、ページの何もない所を右クリックして「日本語に翻訳」を選びます。Safari や Edge も、アドレスバー付近の翻訳ボタンから切り替えられます。' },
@@ -34,23 +34,28 @@
         name: '仕事でAIを使う', en: 'Apply AI at Work',
         desc: 'はじめてAIを仕事に使う人向け。基本から、くり返し作業の手順化、エージェントへの任せ方まで、上から順に進みます。',
         courses: [
-          { ja: 'AIの基礎', en: 'AI Foundations', url: base + 'ai-foundations-dnq5w', lesson: 'c1', toc: 'aif', meta: '所要 約70分／確認テストあり',
+          { ja: 'AIの基礎', en: 'AI Foundations', url: base + 'ai-foundations-dnq5w', lesson: 'c1', toc: 'aif', meta: '所要 約70分／入門',
             desc: 'AI・大規模言語モデル・ChatGPT の基本と、指示の出し方、材料の渡し方、答えの確かめ方、責任ある使い方を、自分の実際の仕事を題材に練習します。' },
-          { ja: '応用・AIの基礎', en: 'Applied AI Foundations', url: base + 'applied-ai-foundations-szsmv', lesson: 'c2', meta: '所要 約80分',
-            desc: '1回きりの指示から一歩進んで、作業をステップに分け、AIが役立つ所と人が確認する所を決めて、くり返し使える流れにします。' },
-          { ja: 'エージェントとワークフロー', en: 'Agents and Workflows', url: base + 'agents-and-workflows-y0qoc', lesson: 'c3', meta: '所要 約90分',
-            desc: '段取りのある作業をエージェントに任せる方法を学びます。材料の渡し方、結果の確認と改善、うまくいったやり方の再利用を練習します。' }
+          { ja: '応用・AIの基礎', en: 'Applied AI Foundations', url: base + 'applied-ai-foundations-szsmv', lesson: 'c2', toc: 'aaf', meta: '所要 約80分（確認テストを含めると約1時間50分）／中級',
+            desc: '1回きりの指示から一歩進んで、定期的な仕事を工程に分けます。推論モデルなど使う機能の選び方も含めて、AIに任せる所と人が確かめる所を決め、くり返し使える流れにします。AI Foundations の受講後がおすすめです。' },
+          { ja: 'エージェントとワークフロー', en: 'Agents and Workflows', url: base + 'agents-and-workflows-y0qoc', lesson: 'c3', toc: 'aaw', meta: '所要 約90分／中級／エージェント機能が使えるアカウントが必要',
+            desc: 'エージェントに、作ってほしい成果物・渡す材料・やってよい範囲をはっきり伝えて仕事を任せ、結果を確かめて直しながら、共有できる流れに育てます。公式ページに練習用のサンプル資料があります。AI Foundations と Applied AI Foundations の受講後がおすすめです。' }
         ]
       },
       {
         name: 'AIで作る', en: 'Build with AI',
-        desc: '開発者向け。Codex（コーデックス）と OpenAI の API（エーピーアイ）を使って、AIの仕組みを設計・構築・評価・公開します。下の説明はコース名と公式の分類から要点をまとめたもので、詳しい中身は公式ページで確認してください。',
+        desc: '開発者向け。Codex（コーデックス）と OpenAI の API（エーピーアイ）を使って、AIの仕組みを設計・構築・評価・改善します。課題の決め方から性能の改善までの5コースは、ソフトウェア開発やAPIを使った実務経験がある人が対象です。Codex の3コースの説明はコース名と公式の分類から要点をまとめたもので、詳しい中身は公式ページで確認してください。',
         courses: [
-          { ja: 'AIで解く課題を決める', en: 'Scope AI Solutions', url: base + 'scope-ai-solutions-kjplw', lesson: 'c8', desc: 'AIで何を解決するのか、どこまでを対象にするのかを決める段階を扱います。' },
-          { ja: 'AIアプリを評価する', en: 'Evaluate AI Applications', url: base + 'evaluate-ai-applications-pxds7', lesson: 'c8', desc: 'AIを組み込んだアプリの出来をどう測り、改善につなげるかを扱います。' },
-          { ja: 'エージェント型の仕組みを設計して作る', en: 'Design and Build Agentic Systems', url: base + 'design-and-build-agentic-systems-k5uke', lesson: 'c8', desc: '自分で判断して動くエージェント型の仕組みを、設計から構築まで扱います。' },
-          { ja: '検索と組み合わせたAIを作る', en: 'Build with Retrieval-Augmented Generation', url: base + 'build-with-retrieval-augmented-generation-2v6xg', lesson: 'c8', desc: '手元の文書などを検索し、その内容をもとに答えるAI（RAG＝ラグ）の作り方を扱います。' },
-          { ja: 'AIアプリの性能を上げる', en: 'Optimize AI Application Performance', url: base + 'optimize-ai-application-performance-1k50h', lesson: 'c8', desc: 'AIアプリの性能を改善する方法を扱います。' },
+          { ja: 'AIで解く課題を決める', en: 'Scope AI Solutions', url: base + 'scope-ai-solutions-kjplw', lesson: 'c8', meta: '所要 約45分（確認テストを含めると約1時間15分）／中級',
+            desc: '実際の業務の流れからAIが役立ちそうな場面を探し、効果の大きさと作る手間の両方で候補を比べて、有望な案を課題の定義と計画にまとめます。' },
+          { ja: 'AIアプリを評価する', en: 'Evaluate AI Applications', url: base + 'evaluate-ai-applications-pxds7', lesson: 'c8', meta: '所要 約70分（確認テストを含めると約1時間40分）／上級／実践ラボつき',
+            desc: '実際の使われ方に近いテストケースを用意し、目的とリスクに合った測り方を選びます。結果から失敗の原因を探し、直したあとに別の所が悪くなっていないかも確かめます。' },
+          { ja: 'エージェント型の仕組みを設計して作る', en: 'Design and Build Agentic Systems', url: base + 'design-and-build-agentic-systems-k5uke', lesson: 'c3', meta: '所要 約110分（確認テストを含めると約2時間20分）／中級／実践ラボつき',
+            desc: '役割を分けた複数のエージェントに、使える道具の範囲と引き継ぎのしかたを決めて仕事を分担させ、成果と安全の条件を満たしているかをテストします。' },
+          { ja: '検索と組み合わせたAIを作る', en: 'Build with Retrieval-Augmented Generation', url: base + 'build-with-retrieval-augmented-generation-2v6xg', lesson: 'c8', meta: '所要 約110分（確認テストを含めると約2時間10分）／中級／実践ラボつき',
+            desc: '自社の文書などのデータを検索し、その内容を根拠に答えるAI（RAG＝ラグ）を作ります。検索のしくみと評価で、答えの質を上げていきます。' },
+          { ja: 'AIアプリの性能を上げる', en: 'Optimize AI Application Performance', url: base + 'optimize-ai-application-performance-1k50h', lesson: 'c8', meta: '所要 約45分（確認テストを含めると約1時間15分）／中級',
+            desc: 'すでに公開しているAIアプリを対象に、実際の利用データをもとに変更の良し悪しを判断し、答えの質・速さ・安定性・コストの釣り合いをとります。' },
           { ja: 'Codex を始める', en: 'Get Started with Codex', url: base + 'get-started-with-codex-jkhsq', lesson: 'c7', desc: 'OpenAI のコーディング用AIエージェント Codex を使い始めるための入門です。' },
           { ja: 'Codex の使い方を広げる', en: 'Extend Codex Workflows', url: base + 'extend-codex-workflows-4e61p', lesson: 'c7', desc: 'Codex を日々の開発の流れに組み込み、使い方を広げていきます。' },
           { ja: 'Codex をチームと仕組みに広げる', en: 'Scale Codex Across Teams and Systems', url: base + 'scale-codex-across-teams-and-systems-jr83a', lesson: 'c7', desc: 'Codex を個人の道具から、チームや組織の仕組みへ広げていきます。' }
