@@ -50,7 +50,7 @@
             desc: '実際の業務の流れからAIが役立ちそうな場面を探し、効果の大きさと作る手間の両方で候補を比べて、有望な案を課題の定義と計画にまとめます。' },
           { ja: 'AIアプリを評価する', en: 'Evaluate AI Applications', url: base + 'evaluate-ai-applications-pxds7', lesson: 'c8', meta: '所要 約70分（確認テストを含めると約1時間40分）／上級／実践ラボつき',
             desc: '実際の使われ方に近いテストケースを用意し、目的とリスクに合った測り方を選びます。結果から失敗の原因を探し、直したあとに別の所が悪くなっていないかも確かめます。' },
-          { ja: 'エージェント型の仕組みを設計して作る', en: 'Design and Build Agentic Systems', url: base + 'design-and-build-agentic-systems-k5uke', lesson: 'c3', meta: '所要 約110分（確認テストを含めると約2時間20分）／中級／実践ラボつき',
+          { ja: 'エージェント型の仕組みを設計して作る', en: 'Design and Build Agentic Systems', url: base + 'design-and-build-agentic-systems-k5uke', lesson: 'c8', meta: '所要 約110分（確認テストを含めると約2時間20分）／中級／実践ラボつき',
             desc: '役割を分けた複数のエージェントに、使える道具の範囲と引き継ぎのしかたを決めて仕事を分担させ、成果と安全の条件を満たしているかをテストします。' },
           { ja: '検索と組み合わせたAIを作る', en: 'Build with Retrieval-Augmented Generation', url: base + 'build-with-retrieval-augmented-generation-2v6xg', lesson: 'c8', meta: '所要 約110分（確認テストを含めると約2時間10分）／中級／実践ラボつき',
             desc: '自社の文書などのデータを検索し、その内容を根拠に答えるAI（RAG＝ラグ）を作ります。検索のしくみと評価で、答えの質を上げていきます。' },

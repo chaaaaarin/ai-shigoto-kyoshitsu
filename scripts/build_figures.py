@@ -75,6 +75,10 @@ SCENES = {
     "2-4": (scene(person_v2(84, 172, face="smile", wave=True), doc_pict_v2(146, 84, 0.95), loop_pict_v2(188, 70, 0.72),
                   bot_v2(222, 172), sparkle(116, 58)),
             "たとえるなら", "うまくいった型を、何度も使う", "変わる所だけ空けたテンプレートを育てる"),
+    "2-5": (scene(person_v2(34, 172, face="smile"), step_ground_v2(96, 172, 1), doc_pict_v2(96, 100, 0.6),
+                  step_ground_v2(154, 172, 2), chart_pict_v2(154, 100, 0.6), step_ground_v2(212, 172, 3),
+                  clock_pict_v2(212, 100, 0.6), bot_v2(266, 172)),
+            "たとえるなら", "手順ごとに、道具を持ち替える", "資料はファイル、数字は分析、考える所は推論モデル"),
     # コース3: 競合3社の調査
     "3-1": (scene(person_v2(40, 172, face="smile"), bubble_pict_v2(62, 98, 0.72), bot_v2(98, 172), divider(150),
                   bot_v2(206, 172), browser_pict_v2(244, 70, 0.7), browser_pict_v2(262, 98, 0.7, highlight=True)),
@@ -88,6 +92,10 @@ SCENES = {
     "3-4": (scene(bot_v2(56, 172), doc_pict_v2(104, 142, 0.72), magnifier_v2(182, 116, s=1.1),
                   person_v2(238, 172, face="smile"), sparkle(264, 94)),
             "たとえるなら", "持ち帰った成果を、点検する", "形・出どころ・操作の3つを確かめてから使う"),
+    "3-5": (scene(bot_v2(46, 172), doc_pict_v2(98, 100, 0.72), check_pict_v2(124, 74, 0.5),
+                  dashed_arc(122, 124, 170, 124, lift=18), person_v2(178, 172, face="smile", wave=True),
+                  person_v2(224, 172, face="smile"), person_v2(266, 172, face="smile", scale=0.9)),
+            "たとえるなら", "うまくいった任せ方を、チームの型に", "依頼文・確認項目・注意点をセットで共有して育てる"),
     # コース4: 総務の社内問い合わせ
     "4-1": (scene(person_v2(58, 172, face="smile", wave=True), desk_v2(154, 172, w=80), envelope_v2(130, 146, s=0.75),
                   envelope_v2(156, 146, s=0.8), envelope_v2(182, 146, s=0.75, rot=8), flag_pict_v2(248, 150, 0.95)),
@@ -153,6 +161,9 @@ SCENES = {
     "8-4": (scene(bot_v2(64, 172), loop_pict_v2(128, 80, 1.0), chart_pict_v2(186, 80, 0.85),
                   person_v2(242, 172, face="smile")),
             "たとえるなら", "1つずつ変えて、そのたび測る", "指示 → 検索 → モデルの順に、変えるたびテスト"),
+    "8-5": (scene(person_v2(36, 172, face="smile"), bot_v2(100, 172), bubble_pict_v2(122, 98, 0.52),
+                  bot_v2(166, 172), book_pict_v2(188, 98, 0.52), bot_v2(232, 172), doc_pict_v2(254, 98, 0.52)),
+            "たとえるなら", "役割を分けて、道具も分ける", "受付・規程・申請の担当と、引き継ぎ・承認を決める"),
 }
 
 

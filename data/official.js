@@ -77,17 +77,20 @@
       ] },
       '2-1': { name: 'Applied AI Foundations', type: 'course', url: AAF_URL, items: [AAF.o1] },
       '2-2': { name: 'Applied AI Foundations', type: 'course', url: AAF_URL, items: [AAF.o4] },
+      '2-5': { name: 'Applied AI Foundations', type: 'course', url: AAF_URL, items: [AAF.o2, AAF.o3] },
       '2-3': { name: 'Applied AI Foundations', type: 'course', url: AAF_URL, items: [AAF.o5] },
       '2-4': { name: 'Applied AI Foundations', type: 'course', url: AAF_URL, items: [AAF.o1] },
       '3-1': { name: 'Agents and Workflows', type: 'course', url: AAW_URL, items: [AAW.o1] },
       '3-2': { name: 'Agents and Workflows', type: 'course', url: AAW_URL, items: [AAW.o2, AAW.o3] },
       '3-3': { name: 'Agents and Workflows', type: 'course', url: AAW_URL, items: [AAW.o6] },
       '3-4': { name: 'Agents and Workflows', type: 'course', url: AAW_URL, items: [AAW.o4] },
+      '3-5': { name: 'Agents and Workflows', type: 'course', url: AAW_URL, items: [AAW.o4, AAW.o5] },
       '7-3': { name: 'Extend Codex Workflows', type: 'course', url: base + 'extend-codex-workflows-4e61p' },
       '7-4': { name: 'Scale Codex Across Teams and Systems', type: 'course', url: base + 'scale-codex-across-teams-and-systems-jr83a' },
       '8-2': { name: 'Build with Retrieval-Augmented Generation', type: 'course', url: base + 'build-with-retrieval-augmented-generation-2v6xg' },
       '8-3': { name: 'Evaluate AI Applications', type: 'course', url: base + 'evaluate-ai-applications-pxds7' },
-      '8-4': { name: 'Optimize AI Application Performance', type: 'course', url: base + 'optimize-ai-application-performance-1k50h' }
+      '8-4': { name: 'Optimize AI Application Performance', type: 'course', url: base + 'optimize-ai-application-performance-1k50h' },
+      '8-5': { name: 'Design and Build Agentic Systems', type: 'course', url: base + 'design-and-build-agentic-systems-k5uke' }
     },
     // 受講ガイドに出す「受講画面の目次」
     toc: {
