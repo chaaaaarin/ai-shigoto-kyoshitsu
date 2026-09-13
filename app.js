@@ -220,7 +220,7 @@
       for (var i = 0; i < rules.length; i++) {
         if (rules[i][0].test(dt.textContent)) {
           var ic = DICONS[rules[i][1]];
-          box.insertAdjacentHTML('afterbegin', '<span class="dicon"><span class="dicon-svg">' + ic.svg + '</span><em>' + esc(ic.label) + '</em></span>');
+          box.insertAdjacentHTML('afterbegin', '<span class="dicon"><span class="dicon-svg">' + ic.svg + '</span></span>');
           return;
         }
       }
