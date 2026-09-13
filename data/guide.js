@@ -26,7 +26,7 @@
         name: '仕事でAIを使う', en: 'Apply AI at Work',
         desc: 'はじめてAIを仕事に使う人向け。基本から、くり返し作業の手順化、エージェントへの任せ方まで、上から順に進みます。',
         courses: [
-          { ja: 'AIの基礎', en: 'AI Foundations', url: base + 'ai-foundations-dnq5w', lesson: 'c1', meta: '所要 約70分／確認テストあり',
+          { ja: 'AIの基礎', en: 'AI Foundations', url: base + 'ai-foundations-dnq5w', lesson: 'c1', toc: 'aif', meta: '所要 約70分／確認テストあり',
             desc: 'AI・大規模言語モデル・ChatGPT の基本と、指示の出し方、材料の渡し方、答えの確かめ方、責任ある使い方を、自分の実際の仕事を題材に練習します。' },
           { ja: '応用・AIの基礎', en: 'Applied AI Foundations', url: base + 'applied-ai-foundations-szsmv', lesson: 'c2', meta: '所要 75〜90分',
             desc: '1回きりの指示から一歩進んで、作業をステップに分け、AIが役立つ所と人が確認する所を決めて、くり返し使える流れにします。' },

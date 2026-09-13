@@ -176,12 +176,13 @@
     var items = o.items || [];
     var hasVideo = items.some(function (it) { return it.video; });
     var heading = hasVideo ? '公式の動画で学ぶ' : (o.type === 'player' ? '公式レッスンで学ぶ' : '公式コースで学ぶ');
-    var label = hasVideo ? '公式コースで動画を見る（要サインイン）'
-      : (o.type === 'player' ? '公式コースで読む（要サインイン）' : '公式コースを開く（要サインイン）');
+    var label = hasVideo ? '公式の受講画面で動画を見る（要サインイン）'
+      : (o.type === 'player' ? '公式の受講画面を開く（要サインイン）' : '公式コースを開く（要サインイン）');
     var list = items.length
-      ? '<p style="margin:6px 0 4px">公式コース「' + esc(o.name) + '」の、次のレッスンで同じテーマを学べます。</p><ul class="offlist">' +
+      ? '<p style="margin:6px 0 4px">公式コース「' + esc(o.name) + '」の受講画面で、次のレッスンを選ぶと同じテーマを学べます。</p><ul class="offlist">' +
         items.map(function (it) {
           return '<li><b>' + esc(it.lesson) + '</b>' + (it.video ? ' <span class="badge ai">動画あり</span>' : '') +
+            (it.ja ? '<span class="ja">' + esc(it.ja) + (it.topic ? '：' + esc(it.topic) : '') + '</span>' : '') +
             '<span class="sub">' + esc(it.module) + '</span></li>';
         }).join('') + '</ul>'
       : '<p style="margin:6px 0 12px">このテーマに対応する公式コース「' + esc(o.name) + '」を開きます。</p>';
@@ -297,6 +298,19 @@
     } else { fallback(); }
   }
 
+  function tocBlock(key) {
+    var t = key && OFFICIAL.toc && OFFICIAL.toc[key];
+    if (!t) return '';
+    return '<details class="toc"><summary>受講画面の目次（日本語つき・' + esc(t.updated) + '時点）</summary>' +
+      t.modules.map(function (m) {
+        return '<div class="mod"><h4>' + esc(m.name) + '<span class="ja">' + esc(m.ja) + (m.note ? '：' + esc(m.note) : '') + '</span></h4><ul>' +
+          m.lessons.map(function (l) {
+            return '<li>' + esc(l.t) + (l.video ? ' <span class="badge ai">動画あり</span>' : '') + '<span class="ja">' + esc(l.ja) + '</span></li>';
+          }).join('') + '</ul></div>';
+      }).join('') +
+      '<a class="btn wide" style="margin-top:12px" href="' + esc(t.url) + '" target="_blank" rel="noopener">公式の受講画面を開く（要サインイン） ↗</a></details>';
+  }
+
   function pageGuide() {
     renderChrome('guide');
     var h = GUIDE.howto;
@@ -312,7 +326,7 @@
         return '<div class="cat"><h2>' + esc(cat.name) + '</h2><p class="muted" style="margin-bottom:8px">' + esc(cat.desc) + '</p>' +
           cat.courses.map(function (c) {
             return '<div class="card gcourse"><h3>' + esc(c.ja) + '<span class="en">' + esc(c.en) + '</span></h3>' +
-              '<p>' + esc(c.desc) + '</p>' + (c.meta ? '<p class="muted">' + esc(c.meta) + '</p>' : '') +
+              '<p>' + esc(c.desc) + '</p>' + (c.meta ? '<p class="muted">' + esc(c.meta) + '</p>' : '') + tocBlock(c.toc) +
               '<div class="links"><a href="' + esc(c.url) + '" target="_blank" rel="noopener">公式ページを開く（英語）↗</a>' +
               (c.lesson ? '　·　<a href="#/course/' + c.lesson + '">このアプリの関連コース</a>' : '') + '</div></div>';
           }).join('') + '</div>';
