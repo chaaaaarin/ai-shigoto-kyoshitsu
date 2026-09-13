@@ -126,17 +126,21 @@
       '<div><b>' + COURSES.length + '</b><span>コース</span></div>' +
       '<div><b>' + GUIDE.cats.reduce(function (n, c) { return n + c.courses.length; }, 0) + '</b><span>公式コースの受講ガイド</span></div></div>' +
       '<a class="btn" href="#/lesson/' + nxt + '">' + (started ? '続きから学ぶ' : '最初のレッスンを始める') + ' →</a></section>' +
+      (started ? '' : howtoStrip()) + finderBlock() +
       coursesByGroup() +
       '<div class="sec-title">公式の無料コースも受けたい人へ</div>' +
       '<a class="card course" href="#/guide"><div class="num">' + icon('guide') + '</div><div style="flex:1">' +
       '<h3>OpenAI Academy の受講ガイド</h3><p>英語の公式コースを、日本語で受講するための手順と、どのコースから始めるかの目安をまとめています。</p></div></a>' +
       foot();
+    bindFinder();
   }
 
   function pageLearn() {
     renderChrome('learn');
     view.innerHTML = '<h1 class="h1">講座</h1><p class="lead">まずは「仕事でAIを使う」の3コースから。そのあとは、立場に合わせて選んでください。1レッスン10分前後で、途中でやめても進み具合は残ります。</p>' +
-      coursesByGroup() + foot();
+      '<input class="search" id="lesson-search" type="search" placeholder="レッスンをさがす（例: テンプレート、出典）" aria-label="レッスンをさがす" style="margin-top:14px">' +
+      '<div id="search-results"></div><div id="course-groups">' + coursesByGroup() + '</div>' + foot();
+    bindSearch();
   }
 
   function pageCourse(id) {
@@ -146,7 +150,7 @@
     var p = courseProgress(c);
     view.innerHTML = '<div class="kicker">コース' + c.no + '</div><h1 class="h1">' + esc(c.title) + '</h1>' +
       '<p class="lead">' + esc(c.desc) + '</p>' +
-      '<div class="goal"><b>このコースで身につくこと</b><br>' + esc(c.outcome) + '</div>' +
+      '<div class="goal"><b>このコースで身につくこと</b><br>' + esc(c.outcome) + '</div>' + courseSummary(c) +
       '<div class="card" style="margin-top:16px">' + c.lessons.map(function (l, i) {
         var ready = !!LESSONS[l.id];
         var done = state.done[l.id];
@@ -247,6 +251,8 @@
         : '<a class="btn" href="#/course/' + c.id + '">コースに戻る</a>') +
       '</div>' + foot();
 
+    buildLessonToc();
+    linkGlossary(c);
     view.querySelector('[data-copy]').addEventListener('click', function () { copyText(L.prompt.text); });
     view.querySelectorAll('.q').forEach(function (qEl) {
       qEl.querySelectorAll('.opt').forEach(function (btn) {
@@ -320,7 +326,7 @@
       h.steps.map(function (s) { return '<li>' + s + '</li>'; }).join('') + '</ol>' +
       h.notes.map(function (n) { return '<div class="note warn"><span class="nt">' + esc(n.t) + '</span>' + n.d + '</div>'; }).join('') + '</div>' +
       '<div class="sec-title">日本語で受講するコツ</div><div class="card body">' +
-      h.tips.map(function (t) { return '<p><strong>' + esc(t.t) + '</strong><br>' + t.d + '</p>'; }).join('') + '</div>' +
+      h.tips.map(function (t) { return '<p><strong>' + esc(t.t) + '</strong><br>' + t.d + '</p>'; }).join('') + '</div>' + faqBlock() +
       '<div class="sec-title">コース一覧（' + GUIDE.updated + ' 時点）</div>' +
       GUIDE.cats.map(function (cat) {
         return '<div class="cat"><h2>' + esc(cat.name) + '</h2><p class="muted" style="margin-bottom:8px">' + esc(cat.desc) + '</p>' +
@@ -333,13 +339,14 @@
       }).join('') + foot();
   }
 
-  function pageGlossary() {
+  function pageGlossary(q) {
     renderChrome('glossary');
     view.innerHTML = '<h1 class="h1">用語集</h1><p class="lead">講座や公式コースに出てくる言葉を、ひとことで。</p>' +
       '<input class="search" type="search" placeholder="用語をさがす（例: プロンプト）" aria-label="用語をさがす" style="margin-top:14px">' +
       '<div class="card" style="margin-top:12px" id="terms"></div>' + foot();
     var input = view.querySelector('.search');
     var box = view.querySelector('#terms');
+    if (q) input.value = q;
     function draw() {
       var k = input.value.trim().toLowerCase();
       var hit = GLOSSARY.filter(function (g) {
@@ -353,6 +360,219 @@
     draw();
   }
 
+  function howtoStrip() {
+    var steps = [
+      ['自分に合うコースを選ぶ', '下の3つの質問に答えると、始めるコースがわかります。'],
+      ['レッスンを読んで試す', '1レッスン10分前後。指示文をコピーして ChatGPT で試します。'],
+      ['公式コースで仕上げる', '受講ガイドを見ながら、英語の公式コースへ進めます。']
+    ];
+    return '<div class="sec-title">このサイトの使い方</div><div class="howto">' + steps.map(function (s, i) {
+      return '<div class="howto-step"><span class="howto-n">' + (i + 1) + '</span><b>' + s[0] + '</b><span>' + s[1] + '</span></div>';
+    }).join('') + '</div>';
+  }
+
+  var FINDER = {
+    roles: [
+      { id: 'work', label: '自分の仕事に使いたい', path: ['c1', 'c2', 'c3'] },
+      { id: 'lead', label: 'チームや部署で広めたい', path: ['c1', 'c4', 'c3'] },
+      { id: 'teacher', label: '先生として授業に使いたい', path: ['c1', 'c5'] },
+      { id: 'student', label: '学生として勉強に使いたい', path: ['c1', 'c6'] },
+      { id: 'dev', label: '開発やAIアプリづくりをしたい', path: ['c1', 'c7', 'c8'] }
+    ],
+    levels: [
+      { id: 'new', label: 'ほとんど使ったことがない' },
+      { id: 'some', label: 'ときどき質問に使う' },
+      { id: 'often', label: '仕事や勉強で毎週使っている' }
+    ],
+    goals: [
+      { id: 'prompt', label: '伝わる頼み方を知りたい', courses: ['c1'] },
+      { id: 'repeat', label: 'くり返し作業を楽にしたい', courses: ['c2'] },
+      { id: 'agent', label: '仕事をまとめて任せたい', courses: ['c3'] },
+      { id: 'rules', label: 'ルールや導入の計画を作りたい', courses: ['c4'] },
+      { id: 'study', label: '授業や勉強に役立てたい', courses: [] },
+      { id: 'build', label: '開発やアプリづくりに使いたい', courses: ['c7', 'c8'] }
+    ],
+    why: {
+      c1: 'AIへの頼み方と確かめ方の基本。ほかのコースの土台になります。',
+      c2: '毎週くり返す作業を手順に分けて、AIに任せる形にします。',
+      c3: '調べものなど、段取りのある仕事をまとめて任せる方法です。',
+      c4: '始める業務の選び方から、ルール・計画・定着まで。',
+      c5: '授業準備や教材づくりに、先生の判断を残して使う方法です。',
+      c6: 'AIを先生役にして、自分で理解し、ルールを守って使う方法です。',
+      c7: '開発の作業を、安全な範囲で Codex に任せる方法です。',
+      c8: '社内文書に答えるAIを例に、企画・評価・改善の流れを学びます。'
+    }
+  };
+
+  function finderBlock() {
+    function group(key, title, list) {
+      return '<div class="fq"><div class="fq-t">' + title + '</div><div class="chips">' + list.map(function (o) {
+        return '<button type="button" class="chipbtn" data-f="' + key + '" data-v="' + o.id + '" aria-pressed="false">' + esc(o.label) + '</button>';
+      }).join('') + '</div></div>';
+    }
+    return '<div class="sec-title">どのコースから始める？</div><div class="card finder">' +
+      group('role', 'Q1. いちばん近いのは？', FINDER.roles) +
+      group('level', 'Q2. AIを使った経験は？', FINDER.levels) +
+      group('goal', 'Q3. いちばん知りたいことは？', FINDER.goals) +
+      '<div class="finder-result" id="finder-result"><p class="muted" style="margin:0">3つ選ぶと、おすすめの順番が出ます。</p></div></div>';
+  }
+
+  function recommend(pick) {
+    var role = FINDER.roles.filter(function (r) { return r.id === pick.role; })[0];
+    var goal = FINDER.goals.filter(function (g) { return g.id === pick.goal; })[0];
+    var goalCourses = goal.id === 'study' ? [pick.role === 'teacher' ? 'c5' : 'c6'] : goal.courses;
+    var list = goalCourses.concat(role.path).filter(function (id, i, arr) { return arr.indexOf(id) === i; });
+    var hadC1 = list.indexOf('c1') !== -1;
+    list = list.filter(function (id) { return id !== 'c1'; });
+    // 経験が浅い人と「頼み方」を知りたい人は、土台のコース1から
+    if (pick.level === 'new' || goal.id === 'prompt' || (pick.level === 'some' && hadC1) || !list.length) list.unshift('c1');
+    return list.slice(0, 3);
+  }
+
+  function renderFinder(pick, el) {
+    var ids = recommend(pick);
+    var byId = function (id) { return COURSES.filter(function (x) { return x.id === id; })[0]; };
+    var first = byId(ids[0]);
+    var firstLesson = first.lessons.filter(function (l) { return LESSONS[l.id]; })[0];
+    el.innerHTML = '<div class="fr-t">おすすめの順番</div><ol class="fr-list">' + ids.map(function (id) {
+      var c = byId(id);
+      return '<li><a href="#/course/' + c.id + '"><b>コース' + c.no + '　' + esc(c.title) + '</b><span>' + esc(FINDER.why[id]) + '</span></a></li>';
+    }).join('') + '</ol>' +
+      (firstLesson ? '<a class="btn wide" href="#/lesson/' + firstLesson.id + '">コース' + first.no + 'の最初のレッスンから始める →</a>' : '');
+  }
+
+  function bindFinder() {
+    var box = view.querySelector('.finder');
+    if (!box) return;
+    var pick = {};
+    box.addEventListener('click', function (e) {
+      var b = e.target.closest('.chipbtn');
+      if (!b) return;
+      pick[b.dataset.f] = b.dataset.v;
+      box.querySelectorAll('.chipbtn[data-f="' + b.dataset.f + '"]').forEach(function (x) {
+        x.setAttribute('aria-pressed', x === b ? 'true' : 'false');
+      });
+      if (pick.role && pick.level && pick.goal) renderFinder(pick, box.querySelector('#finder-result'));
+    });
+  }
+
+  function plain(html) {
+    return html.replace(/<[^>]+>/g, ' ').replace(/&nbsp;/g, ' ').replace(/\s+/g, ' ').trim();
+  }
+  var searchIndex = null;
+  function lessonIndex() {
+    if (searchIndex) return searchIndex;
+    searchIndex = [];
+    COURSES.forEach(function (c) {
+      c.lessons.forEach(function (l) {
+        var L = LESSONS[l.id];
+        if (L) searchIndex.push({ id: l.id, c: c, title: L.title, text: plain(L.goal + ' ' + L.body) });
+      });
+    });
+    return searchIndex;
+  }
+  function highlight(text, k) {
+    var e = esc(text), ek = esc(k).replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    return e.replace(new RegExp(ek, 'gi'), function (m) { return '<mark>' + m + '</mark>'; });
+  }
+  function bindSearch() {
+    var input = view.querySelector('#lesson-search');
+    var out = view.querySelector('#search-results');
+    var groups = view.querySelector('#course-groups');
+    input.addEventListener('input', function () {
+      var k = input.value.trim();
+      if (!k) { out.innerHTML = ''; groups.hidden = false; return; }
+      groups.hidden = true;
+      var kl = k.toLowerCase();
+      var hits = lessonIndex().filter(function (x) { return (x.title + ' ' + x.text).toLowerCase().indexOf(kl) !== -1; });
+      out.innerHTML = hits.length
+        ? '<p class="muted" style="margin-top:12px">' + hits.length + ' 件見つかりました</p>' + hits.slice(0, 20).map(function (x) {
+            var t = x.text, i = t.toLowerCase().indexOf(kl);
+            var snip = i === -1 ? t.slice(0, 70) + '…' : (i > 30 ? '…' : '') + t.slice(Math.max(0, i - 30), i + k.length + 45) + '…';
+            return '<a class="card sres" href="#/lesson/' + x.id + '"><span class="kicker">コース' + x.c.no + '　' + esc(x.c.title) + '</span>' +
+              '<b>' + highlight(x.title, k) + '</b><span class="snip">' + highlight(snip, k) + '</span></a>';
+          }).join('')
+        : '<p class="muted" style="margin-top:12px">見つかりませんでした。別の言葉で探してみてください。</p>';
+    });
+  }
+
+  function courseSummary(c) {
+    var last = c.lessons[c.lessons.length - 1];
+    var L = last && LESSONS[last.id];
+    var m = L && L.body.match(/<div class="note"><span class="nt">[^<]*まとめ[^<]*<\/span>([\s\S]*?)<\/div>/);
+    return m ? '<div class="note" style="margin-top:12px"><span class="nt">このコースの流れ</span>' + m[1] + '</div>' : '';
+  }
+
+  function buildLessonToc() {
+    var hs = view.querySelectorAll('.body > h2');
+    var goal = view.querySelector('.goal');
+    if (hs.length < 3 || !goal) return;
+    var nav = document.createElement('details');
+    nav.className = 'ltoc';
+    nav.open = true;
+    nav.innerHTML = '<summary>このレッスンの流れ（' + hs.length + '項目）</summary><ol>' + Array.prototype.map.call(hs, function (h, i) {
+      return '<li><button type="button" data-jump="' + i + '">' + esc(h.textContent) + '</button></li>';
+    }).join('') + '</ol>';
+    goal.insertAdjacentElement('afterend', nav);
+    nav.addEventListener('click', function (e) {
+      var b = e.target.closest('[data-jump]');
+      if (b) hs[+b.dataset.jump].scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  }
+
+  function linkGlossary(c) {
+    var body = view.querySelector('.body');
+    if (!body) return;
+    var SKIP = 'h2,h3,h4,a,button,summary,pre,.prompt,.offcard,.quiz,.kicker,figcaption,.dt';
+    GLOSSARY.forEach(function (g, gi) {
+      if (!g.keys || (g.courses && g.courses.indexOf(c.id) === -1)) return;
+      var walker = document.createTreeWalker(body, NodeFilter.SHOW_TEXT, null);
+      var node;
+      while ((node = walker.nextNode())) {
+        if (!node.parentElement || node.parentElement.closest(SKIP)) continue;
+        var hit = null, at = -1;
+        g.keys.forEach(function (k) {
+          var i = node.nodeValue.indexOf(k);
+          if (i !== -1 && (at === -1 || i < at)) { at = i; hit = k; }
+        });
+        if (!hit) continue;
+        var rest = node.splitText(at);
+        rest.nodeValue = rest.nodeValue.slice(hit.length);
+        var btn = document.createElement('button');
+        btn.type = 'button'; btn.className = 'tl'; btn.dataset.g = gi; btn.textContent = hit;
+        btn.setAttribute('aria-label', hit + ' の説明を見る');
+        node.parentNode.insertBefore(btn, rest);
+        return;
+      }
+    });
+  }
+
+  function faqBlock() {
+    if (!GUIDE.faq) return '';
+    return '<div class="sec-title">よくある質問</div><div class="card faq">' + GUIDE.faq.map(function (f) {
+      return '<details><summary>' + esc(f.q) + '</summary><p>' + f.a + '</p></details>';
+    }).join('') + '</div>';
+  }
+
+  // index.html が古いキャッシュのままでも動くよう、無ければここで作る
+  var sheet = document.getElementById('sheet');
+  if (!sheet) {
+    sheet = document.createElement('div');
+    sheet.className = 'sheet'; sheet.id = 'sheet'; sheet.hidden = true;
+    sheet.innerHTML = '<div class="sheet-in" role="dialog" aria-modal="true" aria-labelledby="sheet-t"><div class="sheet-head"><b id="sheet-t"></b><span id="sheet-r"></span>' +
+      '<button class="sheet-x" type="button" aria-label="閉じる">×</button></div><p id="sheet-d"></p><a id="sheet-l" class="btn sub" href="#/glossary">用語集で見る</a></div>';
+    document.body.appendChild(sheet);
+  }
+  function openSheet(g) {
+    sheet.querySelector('#sheet-t').textContent = g.term;
+    sheet.querySelector('#sheet-r').textContent = g.read || '';
+    sheet.querySelector('#sheet-d').textContent = g.desc;
+    sheet.querySelector('#sheet-l').setAttribute('href', '#/glossary/' + encodeURIComponent(g.term));
+    sheet.hidden = false;
+    sheet.querySelector('.sheet-x').focus();
+  }
+  function closeSheet() { sheet.hidden = true; }
+
   function route() {
     var parts = (location.hash.replace(/^#\/?/, '') || '').split('/');
     var name = parts[0];
@@ -360,7 +580,7 @@
     else if (name === 'course') pageCourse(parts[1]);
     else if (name === 'lesson') pageLesson(parts[1]);
     else if (name === 'guide') pageGuide();
-    else if (name === 'glossary') pageGlossary();
+    else if (name === 'glossary') pageGlossary(parts[1] ? decodeURIComponent(parts[1]) : '');
     else pageHome();
     var h1 = view.querySelector('.h1');
     document.title = (h1 && name ? h1.textContent + '｜' : '') + '無料AIスクール 日本語ガイド';
@@ -370,6 +590,14 @@
     var b = e.target.closest('[data-back]');
     if (b) location.hash = b.getAttribute('data-back');
   });
-  window.addEventListener('hashchange', function () { route(); window.scrollTo(0, 0); });
+  view.addEventListener('click', function (e) {
+    var t = e.target.closest('.tl');
+    if (t) openSheet(GLOSSARY[+t.dataset.g]);
+  });
+  sheet.addEventListener('click', function (e) {
+    if (e.target === sheet || e.target.closest('.sheet-x')) closeSheet();
+  });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeSheet(); });
+  window.addEventListener('hashchange', function () { closeSheet(); route(); window.scrollTo(0, 0); });
   route();
 })();
