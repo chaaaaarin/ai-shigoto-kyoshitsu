@@ -245,3 +245,6 @@ mark{background:var(--warn-soft);color:inherit;border-radius:3px;padding:0 1px}
 .faq details:first-child{border-top:none;padding-top:0}
 .faq summary{cursor:pointer;font-weight:800;font-size:14.5px;line-height:1.6}
 .faq p{margin-top:6px;font-size:14px;color:var(--ink-mid);line-height:1.8}
+.home-link{display:flex;align-items:center;gap:10px;text-decoration:none;color:inherit;min-width:0}
+.home-link:hover .brand,.home-link:focus-visible .brand{color:var(--accent-ink)}
+.home-mini{margin-left:auto;display:flex;text-decoration:none;flex:none}

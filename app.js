@@ -77,10 +77,11 @@
     var doneCount = ids.filter(function (id) { return state.done[id]; }).length;
     if (back) {
       topbar.innerHTML = '<button class="back" aria-label="戻る" data-back="' + esc(back.href) + '">‹</button>' +
-        '<div class="brand">' + esc(back.title) + '<small>無料AIスクール 日本語ガイド</small></div>';
+        '<div class="brand">' + esc(back.title) + '<small>無料AIスクール 日本語ガイド</small></div>' +
+        '<a class="home-mini" href="#/" aria-label="ホームに戻る" title="ホームに戻る"><div class="logo">' + LOGO + '</div></a>';
     } else {
-      topbar.innerHTML = '<div class="logo">' + LOGO + '</div>' +
-        '<div class="brand">無料AIスクール 日本語ガイド<small>試作版・非公式</small></div>' +
+      topbar.innerHTML = '<a class="home-link" href="#/" aria-label="ホームに戻る"><div class="logo">' + LOGO + '</div>' +
+        '<div class="brand">無料AIスクール 日本語ガイド<small>試作版・非公式</small></div></a>' +
         '<span class="chip">完了 ' + doneCount + ' / ' + ids.length + '</span>';
     }
     tabsEl.innerHTML = TABS.map(function (t) {
@@ -589,6 +590,12 @@
   topbar.addEventListener('click', function (e) {
     var b = e.target.closest('[data-back]');
     if (b) location.hash = b.getAttribute('data-back');
+    // すでにホームにいるときは、ハッシュが変わらず画面が動かないので上まで戻す
+    var home = e.target.closest('.home-link, .home-mini');
+    if (home && (location.hash === '#/' || location.hash === '')) {
+      e.preventDefault();
+      window.scrollTo(0, 0);
+    }
   });
   view.addEventListener('click', function (e) {
     var t = e.target.closest('.tl');
