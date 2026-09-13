@@ -204,6 +204,28 @@
       '</ol></details></div>';
   }
 
+  function sceneBlock(id) {
+    var s = window.SCENES && SCENES[id];
+    if (!s) return '';
+    return '<figure class="scene"><div class="scene-box" role="img" aria-label="' + esc(s.title) + '">' + s.svg + '</div>' +
+      '<figcaption class="metacap"><span class="metachip">' + esc(s.chip) + '</span><b>' + esc(s.title) + '</b><span>' + esc(s.cap) + '</span></figcaption></figure>';
+  }
+
+  function addBoxIcons() {
+    if (!window.DICONS || !window.DICON_RULES) return;
+    var rules = DICON_RULES.map(function (r) { return [new RegExp(r[0]), r[1]]; });
+    view.querySelectorAll('.body .diagram .dbox').forEach(function (box) {
+      var dt = box.querySelector('.dt');
+      if (!dt || box.querySelector('.dicon')) return;
+      for (var i = 0; i < rules.length; i++) {
+        if (rules[i][0].test(dt.textContent)) {
+          box.insertAdjacentHTML('afterbegin', '<span class="dicon">' + DICONS[rules[i][1]] + '</span>');
+          return;
+        }
+      }
+    });
+  }
+
   function quizBlock(id, quiz) {
     var saved = state.quiz[id] || {};
     return '<h2>確認クイズ</h2><div class="quiz">' + quiz.map(function (q, qi) {
@@ -235,7 +257,7 @@
       '<div class="kicker">コース' + c.no + '　' + esc(c.title) + '</div>' +
       '<h1 class="h1">' + esc(L.title) + '</h1><p class="muted">所要 ' + L.min + ' 分</p>' +
       '<div class="goal"><b>このレッスンのゴール</b><br>' + esc(L.goal) + '</div>' +
-      '<article class="body">' + L.body +
+      '<article class="body">' + sceneBlock(id) + L.body +
       '<h2>ChatGPTで試してみる</h2><p>' + L.prompt.lead + '</p>' +
       '<div class="prompt"><div class="prompt-head"><span>' + esc(L.prompt.label) + '</span><button class="copy" data-copy="1">コピー</button></div><pre>' + esc(L.prompt.text) + '</pre></div>' +
       videoBlock(L.video) + officialBlock(id, c) + quizBlock(id, L.quiz) +
@@ -254,6 +276,7 @@
 
     buildLessonToc();
     linkGlossary(c);
+    addBoxIcons();
     view.querySelector('[data-copy]').addEventListener('click', function () { copyText(L.prompt.text); });
     view.querySelectorAll('.q').forEach(function (qEl) {
       qEl.querySelectorAll('.opt').forEach(function (btn) {

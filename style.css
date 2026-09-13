@@ -6,6 +6,8 @@
   --r:18px;
   --font:-apple-system,BlinkMacSystemFont,'Hiragino Sans','Hiragino Kaku Gothic ProN','Noto Sans JP','Yu Gothic',sans-serif;
   --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  --accent-deep:#0F5A6C;
+  --head:'Hiragino Maru Gothic ProN','M PLUS Rounded 1c','Hiragino Sans','Noto Sans JP',sans-serif;
 }
 @media (prefers-color-scheme:dark){
   :root{
@@ -248,3 +250,18 @@ mark{background:var(--warn-soft);color:inherit;border-radius:3px;padding:0 1px}
 .home-link{display:flex;align-items:center;gap:10px;text-decoration:none;color:inherit;min-width:0}
 .home-link:hover .brand,.home-link:focus-visible .brand{color:var(--accent-ink)}
 .home-mini{margin-left:auto;display:flex;text-decoration:none;flex:none}
+/* たとえ話イラスト（スタイルv2の受け皿） */
+.scene{margin:16px 0 4px}
+.scene-box{background:linear-gradient(180deg,var(--scene-sky) 0%,var(--scene-bg) 72%);border:1.5px solid var(--line);border-radius:16px;padding:6px;display:flex;align-items:center;justify-content:center;overflow:hidden;height:200px}
+.scene-box svg{max-width:420px}
+.metacap{display:flex;flex-direction:column;align-items:center;gap:3px;margin-top:10px;text-align:center}
+.metachip{display:inline-block;background:var(--brand);color:#fff;font-family:var(--head);font-weight:800;font-size:11px;border-radius:999px;padding:2px 12px;letter-spacing:.5px}
+@media (prefers-color-scheme:dark){.metachip{background:#2F57A0}}
+.metacap b{font-family:var(--head);font-weight:800;font-size:17px;color:var(--ink);line-height:1.5}
+.metacap span{font-size:13px;color:var(--ink-mid);line-height:1.6}
+.dicon{float:right;width:46px;height:46px;margin:-4px -4px 2px 8px}
+.dicon svg{width:100%;height:100%;display:block}
+/* イラストの中だけ塗りを少し濃くして、可愛さと見分けやすさを出す */
+.scene-box,.dicon,.icon-demo{--brand-soft:#DCE7F8;--accent-soft:#CDEEF4;--paper:#FFFFFF;--scene-sky:#EAF5FA;--scene-bg:#FFFFFF}
+@media (prefers-color-scheme:dark){.scene-box,.dicon,.icon-demo{--brand-soft:#2C426B;--accent-soft:#1F5968;--paper:#1B2946;--scene-sky:#1A2A44;--scene-bg:#152038}}
+.metacap .metachip{color:#fff;font-size:11px}
