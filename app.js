@@ -214,16 +214,20 @@
   function addBoxIcons() {
     if (!window.DICONS || !window.DICON_RULES) return;
     var rules = DICON_RULES.map(function (r) { return [new RegExp(r[0]), r[1]]; });
-    view.querySelectorAll('.body .diagram .dbox').forEach(function (box) {
+    function iconFor(box) {
       var dt = box.querySelector('.dt');
-      if (!dt || box.querySelector('.dicon')) return;
-      for (var i = 0; i < rules.length; i++) {
-        if (rules[i][0].test(dt.textContent)) {
-          var ic = DICONS[rules[i][1]];
-          box.insertAdjacentHTML('afterbegin', '<span class="dicon"><span class="dicon-svg">' + ic.svg + '</span></span>');
-          return;
-        }
-      }
+      for (var i = 0; dt && i < rules.length; i++) if (rules[i][0].test(dt.textContent)) return DICONS[rules[i][1]];
+      return null;
+    }
+    // 同じ図の中でアイコンの有無が混ざると付け忘れに見えるので、全部の枠に合う図だけに付ける
+    view.querySelectorAll('.body .diagram').forEach(function (fig) {
+      var boxes = Array.prototype.slice.call(fig.querySelectorAll('.dbox'));
+      if (!boxes.length || fig.querySelector('.dicon')) return;
+      var icons = boxes.map(iconFor);
+      if (icons.some(function (ic) { return !ic; })) return;
+      boxes.forEach(function (box, i) {
+        box.insertAdjacentHTML('afterbegin', '<span class="dicon"><span class="dicon-svg">' + icons[i].svg + '</span></span>');
+      });
     });
   }
 
@@ -418,7 +422,7 @@
       { id: 'build', label: '開発やアプリづくりに使いたい', courses: ['c7', 'c8'] }
     ],
     why: {
-      c1: 'AIへの頼み方と確かめ方の基本。ほかのコースの土台になります。',
+      c1: 'AIの得意・苦手から、頼み方・確かめ方・安心して使う範囲まで。ほかのコースの土台になります。',
       c2: '毎週くり返す作業を手順に分けて、AIに任せる形にします。',
       c3: '調べものなど、段取りのある仕事をまとめて任せる方法です。',
       c4: '始める業務の選び方から、ルール・計画・定着まで。',

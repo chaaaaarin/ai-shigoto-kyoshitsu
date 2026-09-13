@@ -1,7 +1,7 @@
 (function () {
   var base = 'https://academy.openai.com/public/courses/';
   window.GUIDE = {
-    updated: '2026年9月12日',
+    updated: '2026年9月13日',
     howto: {
       lead: 'OpenAI Academy（オープンエーアイ・アカデミー）は、OpenAI が無料で公開している英語の学習サイトです。日本語で受講するための手順と、どのコースから始めるかの目安をまとめました。',
       steps: [
@@ -36,9 +36,9 @@
         courses: [
           { ja: 'AIの基礎', en: 'AI Foundations', url: base + 'ai-foundations-dnq5w', lesson: 'c1', toc: 'aif', meta: '所要 約70分／確認テストあり',
             desc: 'AI・大規模言語モデル・ChatGPT の基本と、指示の出し方、材料の渡し方、答えの確かめ方、責任ある使い方を、自分の実際の仕事を題材に練習します。' },
-          { ja: '応用・AIの基礎', en: 'Applied AI Foundations', url: base + 'applied-ai-foundations-szsmv', lesson: 'c2', meta: '所要 75〜90分',
+          { ja: '応用・AIの基礎', en: 'Applied AI Foundations', url: base + 'applied-ai-foundations-szsmv', lesson: 'c2', meta: '所要 約80分',
             desc: '1回きりの指示から一歩進んで、作業をステップに分け、AIが役立つ所と人が確認する所を決めて、くり返し使える流れにします。' },
-          { ja: 'エージェントとワークフロー', en: 'Agents and Workflows', url: base + 'agents-and-workflows-y0qoc', lesson: 'c3', meta: '所要 75〜90分',
+          { ja: 'エージェントとワークフロー', en: 'Agents and Workflows', url: base + 'agents-and-workflows-y0qoc', lesson: 'c3', meta: '所要 約90分',
             desc: '段取りのある作業をエージェントに任せる方法を学びます。材料の渡し方、結果の確認と改善、うまくいったやり方の再利用を練習します。' }
         ]
       },
