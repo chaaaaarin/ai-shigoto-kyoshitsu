@@ -173,19 +173,28 @@
   function officialBlock(id, c) {
     var o = officialFor(id, c);
     if (!o) return '';
-    var isLesson = o.type === 'lesson';
-    return '<h2>公式の動画で学ぶ</h2><div class="card offcard">' +
-      '<div class="kicker">OpenAI Academy（英語・要サインイン）</div>' +
-      '<p style="margin:6px 0 12px">' + (isLesson
-        ? '公式コース「' + esc(o.name) + '」の、動画があるレッスンを開きます。'
-        : 'このテーマに対応する公式コース「' + esc(o.name) + '」を開きます。') + '</p>' +
-      '<a class="btn wide" href="' + esc(o.url) + '" target="_blank" rel="noopener">' +
-      (isLesson ? '公式レッスンの動画を見る（要サインイン）' : '公式コースを開く（要サインイン）') + ' ↗</a>' +
-      '<details><summary>日本語字幕の出し方</summary><ol>' +
+    var items = o.items || [];
+    var hasVideo = items.some(function (it) { return it.video; });
+    var heading = hasVideo ? '公式の動画で学ぶ' : (o.type === 'player' ? '公式レッスンで学ぶ' : '公式コースで学ぶ');
+    var label = hasVideo ? '公式コースで動画を見る（要サインイン）'
+      : (o.type === 'player' ? '公式コースで読む（要サインイン）' : '公式コースを開く（要サインイン）');
+    var list = items.length
+      ? '<p style="margin:6px 0 4px">公式コース「' + esc(o.name) + '」の、次のレッスンで同じテーマを学べます。</p><ul class="offlist">' +
+        items.map(function (it) {
+          return '<li><b>' + esc(it.lesson) + '</b>' + (it.video ? ' <span class="badge ai">動画あり</span>' : '') +
+            '<span class="sub">' + esc(it.module) + '</span></li>';
+        }).join('') + '</ul>'
+      : '<p style="margin:6px 0 12px">このテーマに対応する公式コース「' + esc(o.name) + '」を開きます。</p>';
+    return '<h2>' + heading + '</h2><div class="card offcard">' +
+      '<div class="kicker">OpenAI Academy（英語・要サインイン）</div>' + list +
+      '<a class="btn wide" href="' + esc(o.url) + '" target="_blank" rel="noopener">' + label + ' ↗</a>' +
+      '<details><summary>' + (hasVideo ? '日本語字幕の出し方' : '日本語で読むコツ') + '</summary><ol>' +
       '<li>初めて開くときは、コースページで「Enroll now（登録する）」を押し、ChatGPT のアカウントでサインインします。</li>' +
-      '<li>動画プレーヤーの「CC」（字幕）ボタンを押します。</li>' +
-      '<li>「日本語 (自動生成)」があれば選びます。自動生成なので、専門用語は訳がずれることがあります。</li>' +
-      '<li>日本語が選べない動画もあります。そのときは英語字幕をオンにして、このアプリの解説と<a href="#/glossary">用語集</a>を手がかりに見てください。</li>' +
+      (items.length ? '<li>コースの画面が開いたら、レッスンの一覧から上のレッスン名を選びます。</li>' : '') +
+      (hasVideo
+        ? '<li>動画プレーヤーの「CC」（字幕）ボタンを押し、「日本語 (自動生成)」があれば選びます。自動生成なので、専門用語は訳がずれることがあります。</li>' +
+          '<li>日本語が選べない動画もあります。そのときは英語字幕をオンにして、このアプリの解説と<a href="#/glossary">用語集</a>を手がかりに見てください。</li>'
+        : '<li>ページの文章は、ブラウザの翻訳機能（Chrome なら右クリック →「日本語に翻訳」）で日本語にできます。</li>') +
       '</ol></details></div>';
   }
 

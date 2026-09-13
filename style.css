@@ -189,3 +189,7 @@ rt{font-size:.55em;color:var(--ink-sub);font-weight:600}
 .offcard details{margin-top:12px;font-size:13.5px}
 .offcard summary{cursor:pointer;font-weight:800;color:var(--accent-ink)}
 .body .offcard ol{margin:8px 0 0 1.2em}
+.body .offlist{list-style:none;margin:6px 0 12px !important}
+.offlist li{padding:8px 0;border-top:1px solid var(--line)}
+.offlist li:first-child{border-top:none}
+.offlist .sub{display:block;font-size:12.5px;color:var(--ink-sub)}
