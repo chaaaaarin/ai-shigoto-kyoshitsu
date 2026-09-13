@@ -259,8 +259,11 @@ mark{background:var(--warn-soft);color:inherit;border-radius:3px;padding:0 1px}
 @media (prefers-color-scheme:dark){.metachip{background:#2F57A0}}
 .metacap b{font-family:var(--head);font-weight:800;font-size:17px;color:var(--ink);line-height:1.5}
 .metacap span{font-size:13px;color:var(--ink-mid);line-height:1.6}
-.dicon{float:right;width:46px;height:46px;margin:-4px -4px 2px 8px}
-.dicon svg{width:100%;height:100%;display:block}
+.dicon{float:right;width:54px;margin:-4px -6px 4px 8px;text-align:center}
+.dicon-svg{display:block;width:40px;height:40px;margin:0 auto}
+.dicon-svg svg{width:100%;height:100%;display:block}
+.dicon em{display:block;font-style:normal;font-family:var(--head);font-size:11px;font-weight:800;color:var(--ink-mid);line-height:1.3;margin-top:1px;white-space:nowrap}
+.scene-box{height:220px}
 /* イラストの中だけ塗りを少し濃くして、可愛さと見分けやすさを出す */
 .scene-box,.dicon,.icon-demo{--brand-soft:#DCE7F8;--accent-soft:#CDEEF4;--paper:#FFFFFF;--scene-sky:#EAF5FA;--scene-bg:#FFFFFF}
 @media (prefers-color-scheme:dark){.scene-box,.dicon,.icon-demo{--brand-soft:#2C426B;--accent-soft:#1F5968;--paper:#1B2946;--scene-sky:#1A2A44;--scene-bg:#152038}}

@@ -219,7 +219,8 @@
       if (!dt || box.querySelector('.dicon')) return;
       for (var i = 0; i < rules.length; i++) {
         if (rules[i][0].test(dt.textContent)) {
-          box.insertAdjacentHTML('afterbegin', '<span class="dicon">' + DICONS[rules[i][1]] + '</span>');
+          var ic = DICONS[rules[i][1]];
+          box.insertAdjacentHTML('afterbegin', '<span class="dicon"><span class="dicon-svg">' + ic.svg + '</span><em>' + esc(ic.label) + '</em></span>');
           return;
         }
       }
