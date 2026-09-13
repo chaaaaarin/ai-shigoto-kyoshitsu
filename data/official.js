@@ -23,19 +23,37 @@
     lessons: {
       '1-1': { name: 'AI Foundations', type: 'player', url: AIF_PLAYER, items: [
         { module: AIF.m1, lesson: '1.1 Welcome to AI Foundations', ja: 'ようこそ', topic: 'コースの目的と進め方', video: true },
-        { module: AIF.m2, lesson: '2.1 What is AI?', ja: 'AIとは', topic: 'ChatGPT の土台にある仕組みと、人が判断する部分', video: true }
+        { module: AIF.m2, lesson: '2.2 What LLMs can do', ja: 'LLM にできること', topic: '得意なことと、仕組みからくる限界', video: false },
+        { module: AIF.m2, lesson: '2.5 Why AI needs human review', ja: '人の確認が必要な理由', topic: 'もっともらしい間違いへの備え', video: false }
+      ] },
+      '1-5': { name: 'AI Foundations', type: 'player', url: AIF_PLAYER, items: [
+        { module: AIF.m2, lesson: '2.3 How models are trained', ja: 'モデルの学習のされ方', topic: '作られる段階と、AIの「学ぶ」の意味', video: false }
+      ] },
+      '1-6': { name: 'AI Foundations', type: 'player', url: AIF_PLAYER, items: [
+        { module: AIF.m2, lesson: '2.1 What is AI?', ja: 'AIとは', topic: 'ChatGPT でできることの全体像', video: true },
+        { module: AIF.m4, lesson: '4.3 Use files', ja: 'ファイルを使う', topic: '資料を渡して任せる', video: false },
+        { module: AIF.m4, lesson: '4.5 Save useful preferences', ja: 'よく使う設定を保存する', topic: '毎回の前提を覚えさせる', video: false }
       ] },
       '1-2': { name: 'AI Foundations', type: 'player', url: AIF_PLAYER, items: [
-        { module: AIF.m3, lesson: '3.1 Why clear instructions matter', ja: '明確な指示が大事な理由', topic: '依頼を組み立てる枠組みと、出力を見直す観点の入口', video: true },
-        { module: AIF.m3, lesson: '3.2 Task, Concept, and Expectation', ja: '依頼を組み立てる3つの要素', topic: '何を頼むか・前提・仕上がりの分け方', video: false }
+        { module: AIF.m3, lesson: '3.1 Why clear instructions matter', ja: '明確な指示が大事な理由', topic: 'あいまいな頼み方で起きること', video: true },
+        { module: AIF.m3, lesson: '3.2 Task, Concept, and Expectation', ja: '依頼を組み立てる3つの要素', topic: '何を・どんな前提で・どう仕上げるか', video: false }
       ] },
       '1-3': { name: 'AI Foundations', type: 'player', url: AIF_PLAYER, items: [
-        { module: AIF.m4, lesson: '4.1 Why context matters', ja: '文脈が大事な理由', topic: '指示だけでは足りないときに、資料や前提を足す考え方', video: false },
-        { module: AIF.m4, lesson: '4.2 What context to add', ja: '足す文脈の選び方', topic: '推測を減らす情報だけを選ぶ', video: false }
+        { module: AIF.m4, lesson: '4.1 Why context matters', ja: '文脈が大事な理由', topic: '指示だけでは足りないとき', video: false },
+        { module: AIF.m4, lesson: '4.2 What context to add', ja: '足す文脈の選び方', topic: '必要な情報だけを選ぶ', video: false }
+      ] },
+      '1-7': { name: 'AI Foundations', type: 'player', url: AIF_PLAYER, items: [
+        { module: AIF.m2, lesson: '2.4 Know when to use trusted sources', ja: '信頼できる情報源を使う場面', topic: '正確さが要る情報の扱い', video: false },
+        { module: AIF.m4, lesson: '4.4 Use search', ja: '検索を使う', topic: '新しい情報を調べて使う', video: false }
       ] },
       '1-4': { name: 'AI Foundations', type: 'player', url: AIF_PLAYER, items: [
-        { module: AIF.m3, lesson: '3.3 Review the output', ja: '出力を見直す', topic: '最初の出力を下書きとして、観点を決めて見直す', video: false },
-        { module: AIF.m5, lesson: '5.1 Use ChatGPT responsibly', ja: '責任を持って使う', topic: '使う前に、作業の向き不向き・共有する情報・人の確認を考える', video: true }
+        { module: AIF.m3, lesson: '3.3 Review the output', ja: '出力を見直す', topic: '観点を決めて読み直す', video: false },
+        { module: AIF.m3, lesson: '3.4 Improve the output', ja: '出力を良くする', topic: '直してもらう頼み方', video: false }
+      ] },
+      '1-8': { name: 'AI Foundations', type: 'player', url: AIF_PLAYER, items: [
+        { module: AIF.m5, lesson: '5.1 Use ChatGPT responsibly', ja: '責任を持って使う', topic: '使う前に考えること', video: true },
+        { module: AIF.m5, lesson: '5.2 Share information carefully', ja: '情報を慎重に共有する', topic: '渡す情報を減らす', video: false },
+        { module: AIF.m5, lesson: '5.3 Keep yourself in the loop', ja: '自分が判断に関わり続ける', topic: '影響に合わせた確認', video: false }
       ] },
       '7-3': { name: 'Extend Codex Workflows', type: 'course', url: base + 'extend-codex-workflows-4e61p' },
       '7-4': { name: 'Scale Codex Across Teams and Systems', type: 'course', url: base + 'scale-codex-across-teams-and-systems-jr83a' },
